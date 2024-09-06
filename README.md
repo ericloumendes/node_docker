@@ -7,7 +7,9 @@
 ![Dockerlogo](/mgt/Images/docker-logo-blue.svg)
 
 
-<h3 style="text-align: center"> É legal! </h3>
+<h3 align="center">
+  É legal!
+</h3>
 
 
 
