@@ -1,0 +1,43 @@
+# Aqui vamos definir os containers que vão ser criados
+services:
+  # Criação de um container chamado app
+  app:
+    #Definimos a imagem do container
+    image: minha_imagem:1.0
+
+    # Vazemos com que este container tenha conexão bridge com outro (no nosso caso o db)
+    links:
+      - db
+
+    # Definição da exposição de portas
+    ports:
+      - "5000:5000"
+
+    #Faz com que o container apenas inicie após este que foi definido (No caso app só vai iniciar após db ser iniciado)
+    depends_on:
+      - db
+
+  db:
+    # Defino o nome do container
+    container_name: db
+
+    image: mysql
+
+    # Faço o container reniciar sempre que parado a não ser que seja parado manualmente
+    restart: always
+    ports:
+      - "3306:3306"
+    
+    # Defino as variaveis de ambiente do banco
+    environment:
+      # Senha do banco de dados
+      MYSQL_ROOT_PASSWORD: 
+    
+    # Passo os volumes (criação de arquivos de configuração que só são executados quando o container é criado)
+    volumes:
+    
+      #Caminho do script de inicialização do banco
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+      # Caminho da pasta que guardará todas as informações do banco de dados
+      - ./db/data:/var/lib/mysql
